@@ -33,4 +33,4 @@ RUN apk update --no-cache && \
 USER flow
 COPY --from=builder /build/goflow2 /
 
-ENTRYPOINT ["./goflow2"]
+# ENTRYPOINT ["./goflow2"]

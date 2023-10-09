@@ -14,8 +14,8 @@ services:
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_DELETE_TOPIC_ENABLE=false
-      - KAFKA_LOG4J_ROOT_LOGLEVEL=DEBUG
+      - KAFKA_DELETE_TOPIC_ENABLE=true
+      # - KAFKA_LOG4J_ROOT_LOGLEVEL=DEBUG
     restart: always
     depends_on:
       - zookeeper
@@ -23,8 +23,8 @@ services:
     image: grafana/grafana:9.4.3
     environment:
       - GF_INSTALL_PLUGINS=vertamedia-clickhouse-datasource
-        #  - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
-    #  - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=vertamedia-clickhouse-datasource
+      #  - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+      #  - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=vertamedia-clickhouse-datasource
     ports:
       - 3000:3000
     restart: always

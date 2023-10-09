@@ -14,7 +14,8 @@ services:
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_DELETE_TOPIC_ENABLE=true
+      - KAFKA_DELETE_TOPIC_ENABLE=false
+      - KAFKA_LOG4J_ROOT_LOGLEVEL=DEBUG
     restart: always
     depends_on:
       - zookeeper
@@ -22,7 +23,7 @@ services:
     image: grafana/grafana:9.4.3
     environment:
       - GF_INSTALL_PLUGINS=vertamedia-clickhouse-datasource
-    #  - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+        #  - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
     #  - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=vertamedia-clickhouse-datasource
     ports:
       - 3000:3000
@@ -51,13 +52,15 @@ services:
     ports:
       - 8080:8080
       - 6343:6343/udp
-      - 2055:2055/udp
+      - 9991:9991/udp
     restart: always
     command: 
-    - -transport.kafka.brokers=kafka:9092
-    - -transport=kafka
-    - -transport.kafka.topic=flows
-    - -format=bin
+      - ./goflow2
+      - -listen=netflow://:9991
+        # - -format=bin
+      - -transport=kafka
+      - -transport.kafka.brokers=kafka:9092
+      - -transport.kafka.topic=flows
   db:
     image: clickhouse/clickhouse-server:22.8.14.53-alpine
     ports:

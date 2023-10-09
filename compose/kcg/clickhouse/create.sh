@@ -30,8 +30,8 @@ clickhouse client -n <<-EOSQL
         src_as UInt32,
         dst_as UInt32,
 
-        etype UInt32,
-        proto UInt32,
+        etype String,
+        proto String,
 
         src_port UInt32,
         dst_port UInt32,
@@ -43,8 +43,7 @@ clickhouse client -n <<-EOSQL
         kafka_broker_list = 'kafka:9092',
         kafka_topic_list = 'flows',
         kafka_group_name = 'clickhouse',
-        kafka_format = 'Protobuf',
-        kafka_schema = 'flow.proto:FlowMessage';
+	kafka_format = 'JSONEachRow';
 
     CREATE TABLE IF NOT EXISTS flows_raw
     (
@@ -63,8 +62,8 @@ clickhouse client -n <<-EOSQL
         src_as UInt32,
         dst_as UInt32,
 
-        etype UInt32,
-        proto UInt32,
+        etype String,
+        proto String,
 
         src_port UInt32,
         dst_port UInt32,
@@ -110,7 +109,7 @@ clickhouse client -n <<-EOSQL
         dst_as UInt32,
 
         etypeMap Nested (
-            etype UInt32,
+            etype String,
             bytes UInt64,
             packets UInt64,
             count UInt64
